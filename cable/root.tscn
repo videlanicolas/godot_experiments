@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://dhjmqqrj74aax"]
+
+[ext_resource type="Script" path="res://Camera3D.gd" id="1_m4ujs"]
+[ext_resource type="PackedScene" uid="uid://cyse3e00pl302" path="res://cable.tscn" id="2_5ef1c"]
+
+[node name="root" type="Node"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.962574, 0.27102, 0, -0.27102, 0.962574, 0, 0.993295, 4.76872)
+script = ExtResource("1_m4ujs")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.0361117, -0.491177, 0.870311, -0.0203628, 0.87106, 0.490755, -0.99914, 0, -0.0414572, 0, 14.9839, 0)
+
+[node name="Cable" parent="." instance=ExtResource("2_5ef1c")]
+transform = Transform3D(0.648027, 0, 0.761617, 0, 1, 0, -0.761617, 0, 0.648027, 0, 1.83583, 0)

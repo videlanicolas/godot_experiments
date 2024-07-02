@@ -1,0 +1,71 @@
+[gd_scene load_steps=5 format=3 uid="uid://cyse3e00pl302"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_701xu"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_d7nfl"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_0wpwl"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v2hyp"]
+
+[node name="Cable" type="Node3D"]
+
+[node name="ConnectorA" type="StaticBody3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ConnectorA"]
+mesh = SubResource("BoxMesh_701xu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ConnectorA"]
+shape = SubResource("BoxShape3D_d7nfl")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="ConnectorA"]
+node_a = NodePath("..")
+node_b = NodePath("../../CablePiece")
+
+[node name="CablePiece" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.07401, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CablePiece"]
+mesh = SubResource("CapsuleMesh_0wpwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CablePiece"]
+shape = SubResource("CapsuleShape3D_v2hyp")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="CablePiece"]
+node_a = NodePath("..")
+node_b = NodePath("../../CablePiece2")
+
+[node name="CablePiece2" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -2.07737, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CablePiece2"]
+mesh = SubResource("CapsuleMesh_0wpwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CablePiece2"]
+shape = SubResource("CapsuleShape3D_v2hyp")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="CablePiece2"]
+node_a = NodePath("..")
+node_b = NodePath("../../CablePiece3")
+
+[node name="CablePiece3" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -3.04928, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CablePiece3"]
+mesh = SubResource("CapsuleMesh_0wpwl")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CablePiece3"]
+shape = SubResource("CapsuleShape3D_v2hyp")
+
+[node name="PinJoint3D" type="PinJoint3D" parent="CablePiece3"]
+node_a = NodePath("..")
+node_b = NodePath("../../ConnectorB")
+
+[node name="ConnectorB" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4.03286, 0)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ConnectorB"]
+mesh = SubResource("BoxMesh_701xu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ConnectorB"]
+shape = SubResource("BoxShape3D_d7nfl")
