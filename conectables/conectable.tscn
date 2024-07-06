@@ -1,0 +1,27 @@
+[gd_scene load_steps=4 format=3 uid="uid://chwxpdbj8xa22"]
+
+[ext_resource type="Texture2D" uid="uid://ow12qtnmpoaa" path="res://oneConectable.png" id="1_ecrj8"]
+[ext_resource type="Script" path="res://conectable.gd" id="1_s6y3b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uo55e"]
+size = Vector2(16, 11)
+
+[node name="conectable" type="Node2D"]
+script = ExtResource("1_s6y3b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_ecrj8")
+
+[node name="PortA" type="Area2D" parent="."]
+position = Vector2(-46, 70)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PortA"]
+shape = SubResource("RectangleShape2D_uo55e")
+
+[node name="PortB" type="Area2D" parent="."]
+position = Vector2(46, 69)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PortB"]
+shape = SubResource("RectangleShape2D_uo55e")
+
+[connection signal="input_event" from="PortA" to="." method="_on_port_a_input_event"]
