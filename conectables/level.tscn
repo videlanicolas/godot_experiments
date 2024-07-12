@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb12fvvv4gl73"]
+
+[ext_resource type="PackedScene" uid="uid://bbg3csqw5wpxn" path="res://floor.tscn" id="1_nw886"]
+
+[node name="Level" type="Node"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.84543, -0.321734, 0.426305, 0, 0.798194, 0.6024, -0.534087, -0.509287, 0.674817, 5.95323, 10.6994, 7.90165)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.724388, -0.395803, 0.564448, 0, 0.818761, 0.574134, -0.689392, 0.415896, -0.593101, 0, 6.40364, 0)
+
+[node name="Floor" parent="." instance=ExtResource("1_nw886")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.679743, 0, -1.14193)
