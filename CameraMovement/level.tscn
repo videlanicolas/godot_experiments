@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://42ocohte3ym7"]
+[gd_scene load_steps=9 format=3 uid="uid://42ocohte3ym7"]
 
 [ext_resource type="Script" path="res://Camera3D.gd" id="1_pg4bi"]
 
@@ -8,16 +8,57 @@ point_count = 2
 
 [sub_resource type="BoxMesh" id="BoxMesh_634m1"]
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_sp3ku"]
+
+[sub_resource type="PrismMesh" id="PrismMesh_28qag"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_bi654"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_kwfkf"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3hhao"]
+
 [node name="Level" type="Node"]
 
 [node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0835352, 0.185362, 1.443)
 script = ExtResource("1_pg4bi")
-target = NodePath("../Cube")
+target = NodePath("../Cube/CubeMesh")
 distance = 5.0
 speedCurve = SubResource("Curve_g6ndf")
-rotateSpeed = 10.0
+rotateSpeed = 5.0
+slerpWeight = 0.615
+withSlerp = true
 
-[node name="Cube" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.56731, 0, 0)
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.625006, -0.343326, 0.701067, -0.0703965, 0.869641, 0.488639, -0.777439, -0.354755, 0.519363, 0, 7.81898, 0)
+metadata/_edit_lock_ = true
+
+[node name="Cube" type="StaticBody3D" parent="."]
+
+[node name="CubeMesh" type="MeshInstance3D" parent="Cube"]
 mesh = SubResource("BoxMesh_634m1")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Cube"]
+shape = SubResource("BoxShape3D_sp3ku")
+
+[node name="Prism" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.97542, 0, 0)
+
+[node name="PrismMesh" type="MeshInstance3D" parent="Prism"]
+mesh = SubResource("PrismMesh_28qag")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Prism"]
+shape = SubResource("BoxShape3D_bi654")
+
+[node name="Sphere" type="StaticBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63645, 0, 0)
+
+[node name="SphereMesh" type="MeshInstance3D" parent="Sphere"]
+mesh = SubResource("SphereMesh_kwfkf")
+skeleton = NodePath("../..")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Sphere"]
+shape = SubResource("SphereShape3D_3hhao")
