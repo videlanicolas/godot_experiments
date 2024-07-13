@@ -1,6 +1,7 @@
 extends Camera3D
 
 const FOLLOW_SPEED := 1.0
+const ROTATE_SPEED := 1.0
 const RAY_LENGTH = 1000
 
 @export
@@ -21,38 +22,39 @@ var slerpWeight := 0.0
 @export
 var withSlerp := false
 
-var selectedObject: CollisionObject3D = null
+@onready
+var _prev_target : Node3D = target
+
+@onready
+var tween := create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+
+func _ready():
+	tween.tween_property($"..", "global_position", target.global_position, 1)
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("Select"):
-		var hitCollider := CheckClickRaycast()
-		if hitCollider:
-			selectedObject = hitCollider
-			target = hitCollider
-		else:
-			selectedObject = null
-			target = null
-	# If there is no target, skip doing anything.
-	if target == null:
-		pass
-	var n := global_position - target.global_position
+		var hit := CheckClickRaycast()
+		if "collider" in hit:
+			if tween:
+				tween.kill()
+				tween = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_SINE)
+			tween.tween_property($"..", "global_position", hit["collider"].global_position, 1)
 	# Check if the user pressed any input.
 	if Input.is_action_pressed("left"):
-		global_position = n.rotated(Vector3.UP, -delta * rotateSpeed)
+		$"..".rotate(Vector3.UP, -delta * ROTATE_SPEED)
 	if Input.is_action_pressed("right"):
-		global_position = n.rotated(Vector3.UP, delta * rotateSpeed)
+		$"..".rotate(Vector3.UP, delta * ROTATE_SPEED)
 	# Look at the target.
-	look_at(target.global_position)
+	look_at($"..".position)
 	# Now adjust the camera position according to the distance.
 	_adjust_distance_from_target(delta)
 
 func _adjust_distance_from_target(delta):
-	# First calculate the vector the Camera should be in.
-	var desiredPosition := (global_position - target.global_position).normalized() * distance
+	var desiredPosition = position.normalized() * distance
 	# Interpolate the position of the camera to slowly adjust its position.
-	global_position = global_position.lerp(desiredPosition, delta * FOLLOW_SPEED)
+	position = position.lerp(desiredPosition, delta * FOLLOW_SPEED)
 
-func CheckClickRaycast() -> CollisionObject3D:
+func CheckClickRaycast() -> Dictionary:
 	# Get the physics space.
 	var space_state = get_world_3d().direct_space_state
 	# Get the mouse position.
@@ -69,6 +71,9 @@ func CheckClickRaycast() -> CollisionObject3D:
 	# Make the actualy query.
 	var result = space_state.intersect_ray(query)
 	if !result:
-		return null
+		return Dictionary()
 	print(result)
-	return result['collider']
+	return result
+
+func RotateAround(axis : Vector3, circleNormal : Vector3, angleRadians : float):
+	pass

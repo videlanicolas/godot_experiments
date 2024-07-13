@@ -20,13 +20,14 @@ point_count = 2
 
 [node name="Level" type="Node"]
 
-[node name="Camera3D" type="Camera3D" parent="." node_paths=PackedStringArray("target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0835352, 0.185362, 1.443)
+[node name="Target" type="Marker3D" parent="."]
+
+[node name="Camera3D" type="Camera3D" parent="Target" node_paths=PackedStringArray("target")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.99021, 3.20284)
 script = ExtResource("1_pg4bi")
-target = NodePath("../Cube/CubeMesh")
+target = NodePath("../../Cube/CubeMesh")
 distance = 5.0
 speedCurve = SubResource("Curve_g6ndf")
-rotateSpeed = 5.0
 slerpWeight = 0.615
 withSlerp = true
 
@@ -44,7 +45,7 @@ skeleton = NodePath("../..")
 shape = SubResource("BoxShape3D_sp3ku")
 
 [node name="Prism" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.97542, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.33051, 0, -8.42544)
 
 [node name="PrismMesh" type="MeshInstance3D" parent="Prism"]
 mesh = SubResource("PrismMesh_28qag")
@@ -54,7 +55,7 @@ skeleton = NodePath("../..")
 shape = SubResource("BoxShape3D_bi654")
 
 [node name="Sphere" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.63645, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.10376, 0, -4.17703)
 
 [node name="SphereMesh" type="MeshInstance3D" parent="Sphere"]
 mesh = SubResource("SphereMesh_kwfkf")
