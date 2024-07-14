@@ -11,6 +11,9 @@ var target : Node3D = null
 var distance : float = 0
 
 @export
+var follow_angle : float = 0
+
+@export
 var speedCurve : Curve
 
 @export
@@ -41,9 +44,9 @@ func _physics_process(delta):
 			tween.tween_property($"..", "global_position", hit["collider"].global_position, 1)
 	# Check if the user pressed any input.
 	if Input.is_action_pressed("left"):
-		$"..".rotate(Vector3.UP, -delta * ROTATE_SPEED)
+		$"..".rotate($"..".transform.basis.y, -delta * ROTATE_SPEED)
 	if Input.is_action_pressed("right"):
-		$"..".rotate(Vector3.UP, delta * ROTATE_SPEED)
+		$"..".rotate($"..".transform.basis.y, delta * ROTATE_SPEED)
 	# Look at the target.
 	look_at($"..".position)
 	# Now adjust the camera position according to the distance.
