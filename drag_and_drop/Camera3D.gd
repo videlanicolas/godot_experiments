@@ -1,24 +1,35 @@
 extends Camera3D
 
-const RAY_LENGTH = 1000
-const DEFAULT_DISTANCE = 10
 
-func _input(event):
-	if Input.is_action_just_pressed("Select") and %Selectable.visible:
-		%Selectable.visible = false
+@export
+var ray_length := 50.0
+
+@onready
+var spawnMap := {
+	"res://example_device.tscn": preload("res://example_device.tscn")
+}
+
+var _selected_object : Node3D = null
 
 func _physics_process(delta):
-	if not %Selectable.visible:
+	if _selected_object == null:
 		return
-	var collisionPos := FloorMouseCollision()
-	if collisionPos != Vector3.ZERO:
-		%Selectable.global_position = collisionPos
+	_selected_object.global_position = GetSelectedPosition()
+
+func _on_ui_button_select(selected_object : String):
+	print("Camera3D received signal: ", selected_object)
+	var pScene : PackedScene = spawnMap[selected_object]
+	if pScene == null:
 		return
-	var mousepos = get_viewport().get_mouse_position()
-	var origin = project_ray_origin(mousepos)
-	%Selectable.global_position = origin + project_ray_normal(mousepos) * DEFAULT_DISTANCE
- 
-func FloorMouseCollision() -> Vector3:
+	print(pScene)
+	var scene := pScene.instantiate()
+	$"..".add_child(scene)
+	_selected_object = scene
+
+func _on_ui_button_done_select():
+	_selected_object = null
+
+func GetSelectedPosition() -> Vector3:
 	# Get the physics space.
 	var space_state = get_world_3d().direct_space_state
 	# Get the mouse position.
@@ -28,12 +39,5 @@ func FloorMouseCollision() -> Vector3:
 	var origin = project_ray_origin(mousepos)
 	# The end Vector3 is the origin vector we defined before plus a vector that is
 	# the normal of the point in Vector3 coordinates of the mouse position, times the ray length.
-	var end = origin + project_ray_normal(mousepos) * RAY_LENGTH
-	# This gives us two vectors that we can easily calculate a ray.
-	# Create the query.
-	var query = PhysicsRayQueryParameters3D.create(origin, end, 1)
-	# Make the actualy query.
-	var result = space_state.intersect_ray(query)
-	if !result:
-		return Vector3.ZERO
-	return result['position']
+	var end = origin + project_ray_normal(mousepos) * ray_length
+	return end

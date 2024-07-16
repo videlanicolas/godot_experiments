@@ -11,8 +11,13 @@ config_version=5
 [application]
 
 config/name="DragAndDrop"
+run/main_scene="res://root.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+
+[display]
+
+window/size/viewport_width=3000
+window/size/viewport_height=1500
 
 [input]
 
