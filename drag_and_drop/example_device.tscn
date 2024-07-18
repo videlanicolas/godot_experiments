@@ -1,8 +1,9 @@
 [gd_scene load_steps=3 format=3 uid="uid://cxnbh3ag31wan"]
 
-[sub_resource type="BoxMesh" id="BoxMesh_m1f2p"]
+[ext_resource type="BoxMesh" uid="uid://cqi6drlskb2oq" path="res://example_device_opaque.tres" id="2_c7euq"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_qx15f"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_veokv"]
+size = Vector3(1, 0, 1)
 
 [node name="ExampleDevice" type="StaticBody3D"]
 collision_layer = 2
@@ -10,11 +11,11 @@ collision_mask = 0
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("BoxMesh_m1f2p")
+mesh = ExtResource("2_c7euq")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("BoxShape3D_qx15f")
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("BoxShape3D_veokv")
 
 [node name="AbovePlacement" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)

@@ -2,6 +2,9 @@ extends Camera3D
 
 const PLACABLE_MASK := 1
 
+const transparent_mesh := preload("res://example_device_transparent.tres")
+const opaque_mesh := preload("res://example_device_opaque.tres")
+
 @export
 var ray_length := 50.0
 
@@ -22,13 +25,14 @@ func _on_ui_button_select(selected_object : String):
 	var pScene : PackedScene = spawnMap[selected_object]
 	if pScene == null:
 		return
-	print(pScene)
 	var scene := pScene.instantiate()
+	scene.get_node("MeshInstance3D").mesh = transparent_mesh
 	$"..".add_child(scene)
 	_selected_object = scene
 
 func _on_ui_button_done_select():
 	_selected_object.collision_layer = 1
+	_selected_object.get_node("MeshInstance3D").mesh = opaque_mesh
 	_selected_object = null
 
 func GetSelectedPosition() -> Vector3:
@@ -47,7 +51,6 @@ func GetSelectedPosition() -> Vector3:
 	var query = PhysicsRayQueryParameters3D.create(origin, end, PLACABLE_MASK)
 	# Make the actualy query.
 	var result = space_state.intersect_ray(query)
-	print_debug(result)
 	if !result:
 		return end
 	return result["collider"].get_node("AbovePlacement").global_position
