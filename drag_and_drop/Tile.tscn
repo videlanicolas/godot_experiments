@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://c8omg7u04ltkq"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_wp57u"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wqadv"]
+albedo_color = Color(0.427451, 0.121569, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_qwice"]
+material = SubResource("StandardMaterial3D_wqadv")
+
+[node name="Tile" type="StaticBody3D"]
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_wp57u")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_qwice")
+
+[node name="AbovePlacement" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.499869, 0)

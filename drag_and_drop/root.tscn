@@ -1,19 +1,22 @@
-[gd_scene load_steps=3 format=3 uid="uid://t27hlqw4vqu2"]
+[gd_scene load_steps=4 format=3 uid="uid://t27hlqw4vqu2"]
 
 [ext_resource type="PackedScene" uid="uid://cbmtbi44ctomp" path="res://ui.tscn" id="1_3n7mb"]
 [ext_resource type="Script" path="res://Camera3D.gd" id="2_nfu4e"]
+[ext_resource type="PackedScene" uid="uid://cxo62qq3a1d43" path="res://Floor.tscn" id="3_k2u44"]
 
 [node name="Root" type="Node"]
 
 [node name="UI" parent="." instance=ExtResource("1_3n7mb")]
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.45965)
+transform = Transform3D(0.88605, -0.182732, 0.426057, 0, 0.919039, 0.394166, -0.46359, -0.349251, 0.814314, 2.49607, 3.1382, 4.61365)
 script = ExtResource("2_nfu4e")
 ray_length = 10.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.693909, -0.327109, 0.641476, 0.0257636, 0.901568, 0.431869, -0.719602, -0.283151, 0.634034, 0, 3.84596, 0)
+
+[node name="Floor" parent="." instance=ExtResource("3_k2u44")]
 
 [connection signal="button_done_select" from="UI" to="Camera3D" method="_on_ui_button_done_select"]
 [connection signal="button_select" from="UI" to="Camera3D" method="_on_ui_button_select"]

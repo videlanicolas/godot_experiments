@@ -1,5 +1,6 @@
 extends Camera3D
 
+const PLACABLE_MASK := 1
 
 @export
 var ray_length := 50.0
@@ -9,7 +10,7 @@ var spawnMap := {
 	"res://example_device.tscn": preload("res://example_device.tscn")
 }
 
-var _selected_object : Node3D = null
+var _selected_object : PhysicsBody3D = null
 
 func _physics_process(delta):
 	if _selected_object == null:
@@ -27,6 +28,7 @@ func _on_ui_button_select(selected_object : String):
 	_selected_object = scene
 
 func _on_ui_button_done_select():
+	_selected_object.collision_layer = 1
 	_selected_object = null
 
 func GetSelectedPosition() -> Vector3:
@@ -40,4 +42,12 @@ func GetSelectedPosition() -> Vector3:
 	# The end Vector3 is the origin vector we defined before plus a vector that is
 	# the normal of the point in Vector3 coordinates of the mouse position, times the ray length.
 	var end = origin + project_ray_normal(mousepos) * ray_length
-	return end
+	# This gives us two vectors that we can easily calculate a ray.
+	# Create the query.
+	var query = PhysicsRayQueryParameters3D.create(origin, end, PLACABLE_MASK)
+	# Make the actualy query.
+	var result = space_state.intersect_ray(query)
+	print_debug(result)
+	if !result:
+		return end
+	return result["collider"].get_node("AbovePlacement").global_position
